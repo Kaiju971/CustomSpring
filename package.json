@@ -1,0 +1,32 @@
+{
+  "name": "springfield-custom",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Xavier",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "axios": "^1.5.0",
+    "firebase": "^10.4.0",
+    "firebase-tools": "^12.5.4",
+    "mui-validate": "^1.1.0",
+    "nodemon": "^3.0.1",
+    "react": "^18.2.0",
+    "react-parallax": "^3.5.1",
+    "react-router": "^6.15.0",
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "^5.0.1"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "concurrently  \"yarn start:frontend\" \"yarn start:backend\"",
+    "start:backend": "nodemon ./api/index.js",
+    "start:frontend": "react-scripts start ./client",
+    "build": "lerna run --parallel build",
+    "dev": "lerna run --parallel dev"
+  },
+  "devDependencies": {
+    "lerna": "^7.2.0",
+    "prettier": "^3.0.3"
+  }
+}
