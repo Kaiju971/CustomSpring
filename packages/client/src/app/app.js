@@ -6,81 +6,61 @@ import { AppRoutes } from "../app/appRoutes";
 
 export let theme = createTheme({
   palette: {
-    colorRed: {
-      main: "#FF0000",
+    colorVertFoncé1: {
+      main: "#092e09",
     },
-    secondary: {
-      main: "#B4F573",
+    secondaryVertFoncé2: {
+      main: "#1e4630",
     },
-    colorBlue: {
-      main: "#66A3FD",
+    colorVertPastel: {
+      main: "#8dc48d4d",
     },
-    colorMaroon: {
-      main: "#5E0202",
+    colorVertFoncé3: {
+      main: "#35674c",
     },
-    colorOrange04624: {
-      main: "rgba(220, 80, 2, 0.4624)",
+    colorVert: {
+      main: "#077c36",
     },
-    colorOrangeBlog: {
-      main: "#C38063",
+    colorVertFluo: {
+      main: "#64cb2cf7",
     },
-    colorGrey: {
-      main: "rgba(155, 37, 37, 0)",
+
+    colorVertNoir: {
+      main: "#1a1717",
+    },
+    colorVertNoirClair: {
+      main: "##323243",
     },
     colorWhite: {
-      main: "#FFFFFF",
-    },
-    colorMaroonFonce: {
-      main: "#BE0000",
-    },
-    colorOrange087: {
-      main: "rgba(220, 80, 2, 0.87)",
-    },
-    colorOrange: {
-      main: "#ff9a23",
-    },
-    colorBrown: {
-      main: "#9B2525",
-    },
-    colorBlack: {
-      main: "#000000",
-    },
-    colorRed1: {
-      main: "rgba(155, 37, 37, 0)",
-    },
-    colorOrangeed701d: {
-      main: "#ed701d",
-    },
-    colorViolet: {
-      main: "#8C689D",
+      main: "#fefefe",
     },
   },
 
   typography: {
     h1: {
-      fontFamily: "Wallpoet,cursive",
+      fontFamily: "Metal Mania, serif",
     },
     h2: {
-      fontFamily: "Kiwi Maru,serif",
+      fontFamily: "Metal Mania, serif",
     },
     h3: {
-      fontFamily: "Kiwi Maru,serif",
+      fontFamily: "Metal Mania, serif",
       "@media (max-width:750px)": {
         fontSize: "15px",
       },
     },
     h4: {
-      fontFamily: "Kiwi Maru,serif",
+      fontFamily: "Birthstone, cursive",
       "@media (max-width:750px)": {
         fontSize: "10px",
       },
     },
 
     body1: {
-      fontFamily: "Kiwi Maru,serif",
+      fontFamily: "Birthstone, cursive",
     },
     body2: {
-      fontFamily: "Wallpoet,cursive",
+      fontFamily: "Birthstone, cursive",
     },
   },
   breakpoints: {

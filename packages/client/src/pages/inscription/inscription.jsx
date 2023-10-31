@@ -17,7 +17,6 @@ import { IconButton, Input } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useSnackbar } from "notistack";
 import axios from "../../axios";
-import { BackGroundGradientInscription } from "../../shared/shared.styled";
 import UpLoad from "../../images/UpLoad.png";
 
 import * as S from "./inscription.styled";
@@ -148,14 +147,13 @@ export default function Inscription() {
                         borderColor: "red",
                       },
                       "&.Mui-focused fieldset": {
-                        borderColor: "colorOrangeed701d.main",
+                        borderColor: "red",
                       },
                     },
                   }}
                   noValidate
                   autoComplete="off"
                 >
-                  <BackGroundGradientInscription>
                     <S.FlexContainer>
                       <S.FlexContainerNom>
                         <TextField
@@ -170,7 +168,7 @@ export default function Inscription() {
                             borderRadius: "15px",
                             height: "7vh",
                             "& .MuiFormLabel-root.Mui-focused ": {
-                              color: "colorOrangeed701d.main",
+                              color: "red",
                             },
 
                             m: 1,
@@ -195,7 +193,7 @@ export default function Inscription() {
                             borderRadius: "15px",
                             height: "7vh",
                             "& .MuiFormLabel-root.Mui-focused ": {
-                              color: "colorOrangeed701d.main",
+                              color: "red",
                             },
                             m: 1,
                             width: { xs: "50vw", md: "25vw" },
@@ -216,7 +214,7 @@ export default function Inscription() {
                             sx={{
                               color: "colorWhite.main",
                               "&.Mui-checked": {
-                                color: "colorOrange.main",
+                                color: "red",
                               },
                             }}
                           >
@@ -225,9 +223,9 @@ export default function Inscription() {
                               control={
                                 <Radio
                                   sx={{
-                                    color: "colorOrange.main",
+                                    color: "red",
                                     "&.Mui-checked": {
-                                      color: "colorOrange.main",
+                                      color: "red",
                                     },
                                   }}
                                 />
@@ -241,7 +239,7 @@ export default function Inscription() {
                                   sx={{
                                     color: "white",
                                     "&, &.Mui-checked": {
-                                      color: "colorOrange.main",
+                                      color: "red",
                                     },
                                   }}
                                 />
@@ -255,7 +253,7 @@ export default function Inscription() {
                                   sx={{
                                     color: "white",
                                     "&, &.Mui-checked": {
-                                      color: "colorOrange.main",
+                                      color: "red",
                                     },
                                   }}
                                 />
@@ -278,7 +276,7 @@ export default function Inscription() {
                             sx={{
                               height: "7vh",
                               "& .MuiFormLabel-root.Mui-focused ": {
-                                color: "colorOrangeed701d.main",
+                                color: "red",
                               },
                               m: 1,
                               textAlign: "start",
@@ -378,7 +376,7 @@ export default function Inscription() {
                         </u>
                       </S.Inscrivez>
                     </S.FlexContainer>
-                  </BackGroundGradientInscription>
+
                 </Box>
               </S.FormContainer>
             </S.Item>

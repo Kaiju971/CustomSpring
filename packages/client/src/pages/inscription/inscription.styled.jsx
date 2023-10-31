@@ -48,7 +48,7 @@ export const FormContainer = styled("div")`
   justify-content: space-evenly;
   height: 100vh;
   padding-bottom: 15vh;
-  background-color: #c38063;
+  background-color: black;
   color: black;
 `;
 

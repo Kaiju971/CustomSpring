@@ -148,9 +148,9 @@ export const Prenom = styled("div")(
   align-items: center;
   border-radius: 20px;
   border: solid;
-  border-color: ${theme.palette.colorViolet.main};
-  background-color: ${theme.palette.colorViolet.main};
-  color: ${theme.palette.colorBlack.main};
+  border-color: ${theme.palette.colorVert.main};
+  background-color: ${theme.palette.colorVert.main};
+  color: ${theme.palette.colorVert.main};
   padding-top: 0.5vh;
   padding-bottom: 0.5vh;
   padding-right: 1vw;
@@ -172,7 +172,7 @@ export const ButtonLogin = styled(Button)(
   width: 15vw;
   min-width: 15vw;
   border-radius: 20px;
-  color: ${theme.palette.colorBlack.main};
+  color: ${theme.palette.colorVertNoir.main};
 
 @media (max-width: 750px) {
    width: 30vw;

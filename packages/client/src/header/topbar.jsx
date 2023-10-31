@@ -26,10 +26,10 @@ import * as S from "./topbar.styled";
 
 const menuItemsArray = [
   "accueil",
-  "blog",
-  "STRIP PLASTIC",
-  "PLATEAU",
-  "KINE et YOGA",
+  "inscription",
+  "produit",
+  "à propos",
+  "contact",
 ];
 
 const drawerWidth = "50%";
@@ -135,7 +135,7 @@ export default function DrawerAppBar() {
         fontFamily="Wallpoet"
         sx={{ my: 2, color: "white" }}
       >
-        Springfield Custom
+        AssoFacTory
       </Typography>
       <List
         sx={{
@@ -233,7 +233,7 @@ export default function DrawerAppBar() {
                   color: "colorMaroon.main",
                 }}
               >
-                Springfield Custom
+                AssoFacTory
               </Typography>
             </S.LogoText>
             <S.PrenomPhoto>
