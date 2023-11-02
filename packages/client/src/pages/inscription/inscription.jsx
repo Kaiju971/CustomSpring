@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Inscrip from "../../videos/Inscription.gif";
 import Grid from "@mui/system/Unstable_Grid";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
+import AuthContext from "../../store/auth/AuthContextProvider";
 import Box from "@mui/system/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -14,18 +13,18 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, Input } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import { useSnackbar } from "notistack";
 import axios from "../../axios";
-import UpLoad from "../../images/UpLoad.png";
 
 import * as S from "./inscription.styled";
+
+const roles = ["administrateur", "salarié", "visiteur"];
 
 export default function Inscription() {
   const [showPassword, setShowPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [newUserId, setNewUserId] = useState(0);
-  const [dataUrl, setDataUrl] = useState(UpLoad);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -34,40 +33,29 @@ export default function Inscription() {
 
   const [user, setUser] = useState({
     prenom: "",
-    genre: "",
+    nom: "",
     email: "",
     password: "",
+    id_role: 3,
   });
 
-  const { prenom, genre, email, password } = user;
+  const { prenom, nom, email, password, id_role } = user;
+  const { authState } = useContext(AuthContext);
+  const userRole = authState.role;
+  const [selectedRole, setSelectedRole] = useState("visiteur");
 
+  const handleChange = (event, index) => {
+    console.log("là");
+    setSelectedRole(event.target.value);
+    console.log(index);
+    setUser({ ...user, id_role: roles[event.target.value] + 1 });
+  };
   const onInputChange = (event) => {
     setUser({ ...user, [event.target?.name]: event.target?.value });
   };
 
   const openTopbar = () => {
     document.querySelector("#iconbutton").click();
-  };
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const handleUpload = async (event) => {
-    if (event.target.files) {
-      const base64Data = await convertToBase64(event.target.files[0]);
-      setDataUrl(URL.createObjectURL(event.target.files[0]));
-      setUser({ ...user, photo: base64Data });
-    }
   };
 
   console.log(user);
@@ -87,7 +75,7 @@ export default function Inscription() {
   const setUp = async () => {
     if (
       user.email !== "" &&
-      user.genre !== "" &&
+      user.nom !== "" &&
       user.password !== "" &&
       user.prenom !== ""
     ) {
@@ -139,7 +127,8 @@ export default function Inscription() {
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "15px",
-                      "& fieldset": {
+
+                      "& .fieldset": {
                         borderColor: "red",
                         height: "8vh",
                       },
@@ -154,229 +143,206 @@ export default function Inscription() {
                   noValidate
                   autoComplete="off"
                 >
-                    <S.FlexContainer>
-                      <S.FlexContainerNom>
-                        <TextField
-                          required
-                          id="Prénom:"
-                          label="Prénom"
-                          value={prenom}
-                          name="prenom"
-                          onChange={(e) => onInputChange(e)}
-                          placeholder="Entrez votre prénom..."
-                          sx={{
-                            borderRadius: "15px",
-                            height: "7vh",
-                            "& .MuiFormLabel-root.Mui-focused ": {
-                              color: "red",
-                            },
+                  <S.FlexContainer>
+                    <S.FlexContainerNom>
+                      <TextField
+                        required
+                        id="Prénom:"
+                        label="Prénom"
+                        value={prenom}
+                        name="prenom"
+                        onChange={(e) => onInputChange(e)}
+                        placeholder="Entrez votre prénom..."
+                        sx={{
+                          borderRadius: "15px",
+                          height: "7vh",
+                          "& .MuiFormLabel-root.Mui-focused ": {
+                            color: "red",
+                          },
 
-                            m: 1,
-                            width: { xs: "50vw", md: "25vw" },
-                            backgroundColor: "colorWhite.main",
-                            boxShadow: " 0px 8px 8px #566573  inset",
-                            textAlign: "center",
-                          }}
-                        />
-                      </S.FlexContainerNom>
-                      <S.FlexContainerNom>
-                        <TextField
-                          required
-                          id="Email"
-                          label="Email"
-                          value={email}
-                          name="email"
-                          onChange={(e) => onInputChange(e)}
-                          placeholder="Entrez votre Email"
-                          color="secondary"
+                          m: 1,
+                          width: { xs: "50vw", md: "25vw" },
+                          backgroundColor: "colorWhite.main",
+                          boxShadow: " 0px 8px 8px #566573  inset",
+                          textAlign: "center",
+                        }}
+                      />
+                    </S.FlexContainerNom>
+                    <S.FlexContainerNom>
+                      <TextField
+                        required
+                        id="nom:"
+                        label="Nom"
+                        value={nom}
+                        name="nom"
+                        onChange={(e) => onInputChange(e)}
+                        placeholder="Entrez votre Nom..."
+                        sx={{
+                          borderRadius: "15px",
+                          height: "7vh",
+                          "& .MuiFormLabel-root.Mui-focused ": {
+                            color: "red",
+                          },
+
+                          m: 1,
+                          width: { xs: "50vw", md: "25vw" },
+                          backgroundColor: "colorWhite.main",
+                          boxShadow: " 0px 8px 8px #566573  inset",
+                          textAlign: "center",
+                        }}
+                      />
+                    </S.FlexContainerNom>
+                    <S.FlexContainerNom>
+                      <TextField
+                        required
+                        id="Email"
+                        label="Email"
+                        value={email}
+                        name="email"
+                        onChange={(e) => onInputChange(e)}
+                        placeholder="Entrez votre Email"
+                        color="secondary"
+                        sx={{
+                          borderRadius: "15px",
+                          height: "7vh",
+                          "& .MuiFormLabel-root.Mui-focused ": {
+                            color: "red",
+                          },
+                          m: 1,
+                          width: { xs: "50vw", md: "25vw" },
+                          backgroundColor: "colorWhite.main",
+                          boxShadow: " 0px 8px 8px #566573  inset",
+                        }}
+                      />
+                    </S.FlexContainerNom>
+
+                    <S.FlexContainerPass>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "start",
+                          flexWrap: "wrap",
+                          width: { xs: "50vw", md: "25vw" },
+                        }}
+                      >
+                        <FormControl
                           sx={{
-                            borderRadius: "15px",
                             height: "7vh",
                             "& .MuiFormLabel-root.Mui-focused ": {
                               color: "red",
                             },
                             m: 1,
-                            width: { xs: "50vw", md: "25vw" },
-                            backgroundColor: "colorWhite.main",
-                            boxShadow: " 0px 8px 8px #566573  inset",
-                          }}
-                        />
-                      </S.FlexContainerNom>
-                      <FormControl>
-                        <S.RadioButton>
-                          <div>Genre:&nbsp;&nbsp;</div>
-                          <RadioGroup
-                            row
-                            aria-labelledby="radio-buttons"
-                            name="genre"
-                            value={genre}
-                            onChange={(e) => onInputChange(e)}
-                            sx={{
-                              color: "colorWhite.main",
-                              "&.Mui-checked": {
-                                color: "red",
-                              },
-                            }}
-                          >
-                            <FormControlLabel
-                              value="Femme"
-                              control={
-                                <Radio
-                                  sx={{
-                                    color: "red",
-                                    "&.Mui-checked": {
-                                      color: "red",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Femme"
-                            />
-                            <FormControlLabel
-                              value="Homme"
-                              control={
-                                <Radio
-                                  sx={{
-                                    color: "white",
-                                    "&, &.Mui-checked": {
-                                      color: "red",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Homme"
-                            />
-                            <FormControlLabel
-                              value="Autre"
-                              control={
-                                <Radio
-                                  sx={{
-                                    color: "white",
-                                    "&, &.Mui-checked": {
-                                      color: "red",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Autre"
-                            />
-                          </RadioGroup>
-                        </S.RadioButton>
-                      </FormControl>
-                      <S.FlexContainerPass>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "start",
-                            flexWrap: "wrap",
+                            textAlign: "start",
                             width: { xs: "50vw", md: "25vw" },
                           }}
+                          variant="outlined"
                         >
-                          <FormControl
+                          <InputLabel
+                            required
+                            htmlFor="outlined-adornment-password"
+                            color="secondary"
+                          >
+                            Mot de passe
+                          </InputLabel>
+                          <OutlinedInput
+                            id="outlined-adornment-password"
+                            type={showPassword ? "text" : "password"}
+                            color="secondary"
                             sx={{
                               height: "7vh",
-                              "& .MuiFormLabel-root.Mui-focused ": {
-                                color: "red",
-                              },
-                              m: 1,
-                              textAlign: "start",
                               width: { xs: "50vw", md: "25vw" },
+                              textAlign: "center",
+                              justifyContent: "center",
+                              borderRadius: "15px",
+                              backgroundColor: " white",
+                              boxShadow: " 0px 8px 8px #566573  inset",
                             }}
-                            variant="outlined"
-                          >
-                            <InputLabel
-                              required
-                              htmlFor="outlined-adornment-password"
-                              color="secondary"
-                            >
-                              Mot de passe
-                            </InputLabel>
-                            <OutlinedInput
-                              id="outlined-adornment-password"
-                              type={showPassword ? "text" : "password"}
-                              color="secondary"
-                              sx={{
-                                height: "7vh",
-                                width: { xs: "50vw", md: "25vw" },
-                                textAlign: "center",
-                                justifyContent: "center",
-                                borderRadius: "15px",
-                                backgroundColor: " white",
-                                boxShadow: " 0px 8px 8px #566573  inset",
-                              }}
-                              endAdornment={
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                  >
-                                    {showPassword ? (
-                                      <VisibilityOff />
-                                    ) : (
-                                      <Visibility />
-                                    )}
-                                  </IconButton>
-                                </InputAdornment>
-                              }
-                              label="Password"
-                              value={password}
-                              name="password"
-                              onChange={(e) => onInputChange(e)}
-                            />
-                          </FormControl>
-                        </Box>
-                      </S.FlexContainerPass>
-                      <S.ButtonUpload variant="contained" component="label">
-                        <Avatar
-                          alt="user"
-                          src={dataUrl}
-                          sx={{ width: 130, height: 130 }}
-                        />
-                        <Input
-                          style={{ display: "none" }}
-                          type="file"
-                          hidden
-                          onChange={handleUpload}
-                          name="userphoto"
-                        />
-                      </S.ButtonUpload>
-                      <Typography
-                        variant="h6"
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            }
+                            label="Password"
+                            value={password}
+                            name="password"
+                            onChange={(e) => onInputChange(e)}
+                          />
+                        </FormControl>
+                      </Box>
+                    </S.FlexContainerPass>
+                    <Box>
+                      <TextField
+                        id="outlined-select-role"
+                        type="text"
+                        select
+                        label="role"
+                        name="role"
+                        value={selectedRole ? selectedRole : "visiteur"}
+                        defaultValue={"visiteur"}
                         sx={{
-                          color: "colorWhite.main",
-                        }}
-                      >
-                        Choisissez votre photo de profil
-                      </Typography>
+                          borderRadius: "15px",
+                          height: "7vh",
+                          "& .MuiFormLabel-root.Mui-focused ": {
+                            color: "red",
+                          },
 
-                      <S.ButtonValider
-                        variant="contained"
-                        size="medium"
-                        onClick={() => setUp()}
-                        sx={{
                           m: 1,
-                          backgroundColor: "green",
-                          boxShadow: " 0px 4px 4px #566573 ",
-                          width: "20vw",
-                          borderRadius: "10px",
+                          width: { xs: "50vw", md: "25vw" },
+                          backgroundColor: "colorWhite.main",
+                          boxShadow: " 0px 8px 8px #566573  inset",
+                          textAlign: "center",
+                          fontSize: "50vh",
                         }}
+                        // disabled={userRole !== 'administrateur'}
+                        // onChange={(e) => handleChange(e)}
                       >
-                        Valider
-                      </S.ButtonValider>
-                      <S.Inscrivez>
-                        Déja Inscrit ?
-                        <u
-                          style={{
-                            cursor: "pointer",
-                          }}
-                          onClick={() => openTopbar()}
-                        >
-                          Connectez-vous
-                        </u>
-                      </S.Inscrivez>
-                    </S.FlexContainer>
-
+                        {roles?.map((item, index) => (
+                          <MenuItem
+                            key={index}
+                            value={item}
+                            onChange={(e) => handleChange(e, item)}
+                          >
+                            {item}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Box>
+                    <S.ButtonValider
+                      variant="contained"
+                      size="medium"
+                      onClick={() => setUp()}
+                      sx={{
+                        m: 1,
+                        backgroundColor: "green",
+                        boxShadow: " 0px 4px 4px #566573 ",
+                        width: "20vw",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Valider
+                    </S.ButtonValider>
+                    <S.Inscrivez>
+                      Déja Inscrit ?
+                      <u
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => openTopbar()}
+                      >
+                        Connectez-vous
+                      </u>
+                    </S.Inscrivez>
+                  </S.FlexContainer>
                 </Box>
               </S.FormContainer>
             </S.Item>

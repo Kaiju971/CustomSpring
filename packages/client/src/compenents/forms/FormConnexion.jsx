@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Grid from "@mui/system/Unstable_Grid";
 import Box from "@mui/system/Box";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Validate, ValidationGroup } from "mui-validate";
 import Avatar from "@mui/material/Avatar";
-import axios from "../../axios";
+import useApi from "../../hooks/api/useApi";
+import AuthContext from "../../store/auth/AuthContextProvider";
+
 import { useSnackbar } from "notistack";
 
 import * as S from "../../header/topbar.styled";
@@ -22,18 +24,54 @@ const FormConnexion = () => {
   const { enqueueSnackbar } = useSnackbar();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const [dataUrl, setDataUrl] = useState("");
-  const userIdCourant = localStorage.getItem("usrCourant");
-  const userCourantPrenom = localStorage.getItem("usrCourantPrenom");
+  const [authData, setAuthData] = useState();
+  const { request, setError, error } = useApi();
+  const { globalLogInDispatch, authState } = useContext(AuthContext);
   const [validationEmail, setValidationEmail] = useState({
     valid: false,
     messages: [],
     display: false,
   });
 
-  const [isInscrit, setIsInscrit] = useState(
-    userIdCourant !== "" && userIdCourant !== undefined
-  );
-  const [userPrenom, setUserPrenom] = useState("");
+  useEffect(() => {
+    if (authData && "success" in authData) {
+      globalLogInDispatch({
+        authToken: authData.user.auth_token,
+        userId: authData.user.user_id,
+        email: authData.user.email,
+        id_role: authData.user.id_role,
+        role: authData.user.role,
+      });
+    }
+  }, [authData, globalLogInDispatch]);
+
+  const authHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const params = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+        }),
+      };
+
+      const endpoint = "login";
+
+      await request(endpoint, params, setAuthData);
+    } catch (error) {
+      setError(error.message || error);
+    }
+  };
+
+  // const [isInscrit, setIsInscrit] = useState(
+  //   userIdCourant !== "" && userIdCourant !== undefined
+  // );
+  // const [userPrenom, setUserPrenom] = useState("");
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -47,85 +85,85 @@ const FormConnexion = () => {
 
   const { email, password } = user;
 
-  useEffect(() => {
-    if (isInscrit) setUserPrenom(userCourantPrenom);
-  }, [userIdCourant]);
+  // useEffect(() => {
+  //   if (isInscrit) setUserPrenom(userCourantPrenom);
+  // }, [userIdCourant]);
 
   const onInputChange = (event) => {
     setUser({ ...user, [event.target?.name]: event.target?.value });
   };
 
-  const showError = (error) => {
-    enqueueSnackbar("Utilisateur inconnu", {
-      variant: "error",
-    });
-    console.error(error);
-  };
+  // const showError = (error) => {
+  //   enqueueSnackbar("Utilisateur inconnu", {
+  //     variant: "error",
+  //   });
+  //   console.error(error);
+  // };
 
-  const fetchGet = async () => {
-    const request = {
-      params: {
-        email: user.email,
-        password: user.password,
-      },
-    };
-    await axios
-      .get(`user`, request)
-      .then((response) => {
-        setUserdata(response.data.results[0]);
-      })
-      .catch((err) => {
-        showError(err);
-      });
-  };
+  // const fetchGet = async () => {
+  //   const request = {
+  //     params: {
+  //       email: user.email,
+  //       password: user.password,
+  //     },
+  //   };
+  //   await axios
+  //     .get(`user`, request)
+  //     .then((response) => {
+  //       setUserdata(response.data.results[0]);
+  //     })
+  //     .catch((err) => {
+  //       showError(err);
+  //     });
+  // };
 
-  const getUser = async () => {
-    if (isInscrit) {
-      localStorage.setItem("usrCourant", "");
-      localStorage.setItem("usrCourantPrenom", "");
-      setDataUrl("");
-      setIsInscrit(false);
-    } else {
-      console.log(validationEmail.valid);
-      if (validationEmail.valid) fetchGet();
-      else
-        enqueueSnackbar("Corrigez les erreurs dans le formulaire", {
-          variant: "error",
-        });
-    }
-  };
+  // const getUser = async () => {
+  //   if (isInscrit) {
+  //     localStorage.setItem("usrCourant", "");
+  //     localStorage.setItem("usrCourantPrenom", "");
+  //     setDataUrl("");
+  //     setIsInscrit(false);
+  //   } else {
+  //     console.log(validationEmail.valid);
+  //     if (validationEmail.valid) fetchGet();
+  //     else
+  //       enqueueSnackbar("Corrigez les erreurs dans le formulaire", {
+  //         variant: "error",
+  //       });
+  //   }
+  // };
 
-  useEffect(() => {
-    if (userdata) {
-      setUserPrenom(userdata.prenom);
-      localStorage.setItem("usrCourant", userdata.id);
-      localStorage.setItem("usrCourantPrenom", userdata.prenom);
-      setIsInscrit(true);
-      setDataUrl(`data:image/jpeg;base64,${userdata.photo.slice(20)}`);
-    }
-  }, [userdata]);
+  // useEffect(() => {
+  //   if (userdata) {
+  //     setUserPrenom(userdata.prenom);
+  //     localStorage.setItem("usrCourant", userdata.id);
+  //     localStorage.setItem("usrCourantPrenom", userdata.prenom);
+  //     setIsInscrit(true);
+  //     setDataUrl(`data:image/jpeg;base64,${userdata.photo.slice(20)}`);
+  //   }
+  // }, [userdata]);
 
-  const fetchGetUserById = async () => {
-    const request = {
-      params: {
-        id: userIdCourant,
-      },
-    };
-    await axios
-      .get(`getuserbyid`, request)
-      .then((response) => {
-        setUserdata(response.data.results[0]);
-      })
-      .catch((err) => {
-        showError(err);
-      });
-  };
+  // const fetchGetUserById = async () => {
+  //   const request = {
+  //     params: {
+  //       id: userIdCourant,
+  //     },
+  //   };
+  //   await axios
+  //     .get(`getuserbyid`, request)
+  //     .then((response) => {
+  //       setUserdata(response.data.results[0]);
+  //     })
+  //     .catch((err) => {
+  //       showError(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    if (isInscrit && !userdata) {
-      fetchGetUserById();
-    }
-  }, [userIdCourant]);
+  // useEffect(() => {
+  //   if (isInscrit && !userdata) {
+  //     fetchGetUserById();
+  //   }
+  // }, [userIdCourant]);
 
   return (
     <S.CContainer>
@@ -152,7 +190,7 @@ const FormConnexion = () => {
                       autoComplete="off"
                     >
                       <S.FlexContainer>
-                        <S.InputContainer isinscrit={isInscrit}>
+                        <S.InputContainer isinscrit={authState.isLoggedIn}>
                           <Validate
                             name="email"
                             regex={[
@@ -245,16 +283,16 @@ const FormConnexion = () => {
                             </FormControl>
                           </Box>
                         </S.InputContainer>
-                        <S.Prenom isinscrit={isInscrit}>
-                          {isInscrit ? userPrenom : ""}
+                        <S.Prenom isinscrit={authState.isLoggedIn}>
+                          {authState.isLoggedIn ? userPrenom : ""}
                         </S.Prenom>
                         <S.ButtonLogin
-                          isinscrit={isInscrit}
+                          isinscrit={authState.isLoggedIn}
                           variant="contained"
                           size="medium"
-                          onClick={() => getUser()}
+                          onClick={authHandler}
                         >
-                          {isInscrit ? "LOG OUT" : "LOG IN"}
+                          {authState.isLoggedIn ? "LOG OUT" : "LOG IN"}
                         </S.ButtonLogin>
                       </S.FlexContainer>
                     </Box>

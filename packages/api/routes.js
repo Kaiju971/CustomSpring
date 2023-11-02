@@ -7,17 +7,17 @@ import {
   getAllRoles,
   updateUserById,
   removeUser,
-} from "./src/controllers/user";
-import * as userModel from "./src/models/user";
-import { getAllTypes } from "./src/controllers/produits";
-import * as produitModel from "./src/models/produits";
+} from "./src/controllers/user.js";
+import * as userModel from "./src/models/user.js";
+import { getAllTypes } from "./src/controllers/produits.js";
+import * as produitModel from "./src/models/produits.js";
 
 import {
   validateHasParameters,
   validateEmailFormat,
   validatePasswordLength,
-} from "./src/middleware/validation";
-import { checkAuthToken } from "./src/middleware/autho";
+} from "./src/middleware/validation.js";
+import { checkAuthToken } from "./src/middleware/autho.js";
 
 const router = Router();
 
@@ -26,13 +26,7 @@ const router = Router();
  */
 router.post(
   "/enregister",
-  validateHasParameters(
-    "email",
-    "password",
-    "nom",
-    "prenom",
-    "id_role"
-  ),
+  validateHasParameters("email", "password", "nom", "prenom", "id_role"),
   validateEmailFormat,
   validatePasswordLength,
   createNewUser(userModel)

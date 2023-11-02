@@ -1,5 +1,5 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
-import * as userModel from "../models/user";
+import jwt from "jsonwebtoken";
+import * as userModel from "../models/user.js";
 const { AUTH_TOKEN_KEY } = process.env;
 
 export const checkAuthToken = (adminAuth = false) => {

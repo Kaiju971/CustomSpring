@@ -1,9 +1,9 @@
 import { knex } from "../../db.js";
 
-export const table = "salons";
+export const table = "produits";
 
-export const getAllSalons = async () => {
-  const results = await knex(table).select("*");
+export const getTypes = async () => {
+  const results = await knex("types").select("*");
 
   if (results && results.length) {
     return results;

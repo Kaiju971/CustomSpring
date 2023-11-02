@@ -5,9 +5,8 @@ import React, {
   useEffect,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthActionEnum } from "./authActions";
+
 import authReducer, { AuthState, defaultAuthState } from "./authReducer";
-import { Routes } from "../../app/routes";
 
 // Auth context
 const authCtx = createContext({
@@ -27,7 +26,7 @@ export const AuthContextProvider = (props) => {
     const user = localStorage.getItem("user");
     if (user) {
       const userData = JSON.parse(user);
-      authDispatch({ type: AuthActionEnum.LOG_IN, payload: userData });
+      authDispatch({ type: "LOG_IN", payload: userData });
     }
   }, []);
 

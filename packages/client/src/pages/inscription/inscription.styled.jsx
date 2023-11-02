@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 
 export const Container = styled("div")`
   width: 100%;
@@ -82,7 +83,7 @@ export const Inscrivez = styled("div")`
   color: white;
 
   u {
-    color: black;
+    color: white;
   }
 `;
 
@@ -99,11 +100,9 @@ export const FlexControl = styled("div")`
   align-items: center;
 `;
 
-export const RadioButton = styled("div")`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+export const MenuRoles = styled(MenuItem)`
   color: white;
+ 
 `;
 
 export const ButtonValider = styled(Button)`
@@ -113,27 +112,6 @@ export const ButtonValider = styled(Button)`
   color: white;
 `;
 
-export const Img2 = styled("img")`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
 
-  u {
-    color: white;
-  }
-`;
 
-export const ButtonUpload = styled(Button)`
-  && {
-    width: 8vw;
-    height: 14vh;
-    border-radius: 100%;
-    background-color: "transparent";
-    margin: 4%;
 
-    @media (max-width: 750px) {
-      width: 10vw;
-      height: 10vh;
-    }
-  }
-`;

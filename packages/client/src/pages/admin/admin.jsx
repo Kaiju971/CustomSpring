@@ -1,9 +1,8 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSnackbar } from "notistack";
 import axios from "../../axios";
-// import { AdminAPIKey } from "../config";
-import { useNavigate } from "react-router";
+import AuthContext from "../../store/auth/AuthContextProvider";
 import Inscription from "../inscription/inscription";
 
 import * as S from "./admin.styled";
@@ -11,18 +10,19 @@ import * as S from "./admin.styled";
 const AdminAPIKey = "";
 
 const Admin = () => {
-  const navigate = useNavigate();
+  const { authState } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
   const [userdata, setUserdata] = useState([]);
-  const [admindata, setAdmindata] = useState();
   const [disabledId, setDisabledId] = useState("");
-  const [show, setShow] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [user, setUser] = useState({
     id: 0,
+    nom: "",
+    prenom: "",
     email: "",
     password: "",
-    api_key: "",
+    role: "",
+    id_role: 0,
   });
   const [userId, setUserId] = useState(0);
 
@@ -44,7 +44,7 @@ const Admin = () => {
   const fetchGet = async () => {
     const headers = {
       params: {
-        api_key: AdminAPIKey,
+        "x-access-token": authState.authToken,
       },
     };
     await axios

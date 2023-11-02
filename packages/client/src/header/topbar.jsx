@@ -30,6 +30,7 @@ const menuItemsArray = [
   "produit",
   "à propos",
   "contact",
+  'admin'
 ];
 
 const drawerWidth = "20%";

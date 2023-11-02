@@ -1,7 +1,8 @@
 import { Reducer } from "react";
-import { AuthAction } from "./authActions";
 
-
+export const defaultAuthState = {
+  isLoggedIn: false,
+};
 
 const authReducer = (state, action) => {
   // user successfully authenticated
