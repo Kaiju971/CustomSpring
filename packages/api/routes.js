@@ -1,36 +1,56 @@
 import { Router } from "express";
+
 import {
   getAllUsers,
-  getProfile,
+  login,
   createNewUser,
-  getUserById,
+  getAllRoles,
+  updateUserById,
   removeUser,
-} from "./src/controllers/user.js";
-import * as userModel from "./src/models/user.js";
-import { getAllPosts, createNewPost } from "./src/controllers/posts.js";
-import * as postModel from "./src/models/posts.js";
-import * as commentsModel from "./src/models/comments.js";
+} from "./src/controllers/user";
+import * as userModel from "./src/models/user";
+import { getAllTypes } from "./src/controllers/produits";
+import * as produitModel from "./src/models/produits";
+
 import {
-  getAllComments,
-  createNewComment,
-} from "./src/controllers/comments.js";
-import { getSalons } from "./src/controllers/salons.js";
-import * as salonsModel from "./src/models/salons.js";
+  validateHasParameters,
+  validateEmailFormat,
+  validatePasswordLength,
+} from "./src/middleware/validation";
+import { checkAuthToken } from "./src/middleware/autho";
 
 const router = Router();
 
-router.get("/", (req, res) => {});
+/**
+ * Enregistrer un id
+ */
+router.post(
+  "/enregister",
+  validateHasParameters(
+    "email",
+    "password",
+    "nom",
+    "prenom",
+    "id_role"
+  ),
+  validateEmailFormat,
+  validatePasswordLength,
+  createNewUser(userModel)
+);
 
-router.get("/user", getProfile(userModel));
-router.get("/users", getAllUsers(userModel));
-router.delete("/delete", removeUser(userModel));
+/**
+ * Autentification session login id utilisant email et password si valide.
+ */
+router.post(
+  "/login",
+  validateHasParameters("email", "password"),
+  login(userModel)
+);
+router.get("/users", checkAuthToken(true), getAllUsers(userModel));
+router.put("/update", checkAuthToken(true), updateUserById(userModel));
+router.delete("/delete", checkAuthToken(true), removeUser(userModel));
+router.get("/roles", getAllRoles(userModel));
 
-router.get("/getuserbyid", getUserById(userModel));
-router.post("/createuser", createNewUser(userModel));
-router.get("/posts", getAllPosts(postModel));
-router.post("/createpost", createNewPost(postModel));
-router.get("/salons", getSalons(salonsModel));
-router.get("/comments", getAllComments(commentsModel));
-router.post("/createcomment", createNewComment(commentsModel));
+router.get("/types", getAllTypes(produitModel));
 
 export default router;

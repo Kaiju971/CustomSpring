@@ -61,7 +61,7 @@ export const Img = styled("img")`
 `;
 
 export const LogoStyle = styled("img")`
-  width: "10px";
+  width: "50px";
 `;
 
 export const CContainer = styled("div")`
@@ -120,7 +120,7 @@ display: ${isinscrit ? "none" : "block"};
 );
 
 export const Inscrivez = styled("div")`
-  color: ${({ theme }) => theme.palette.colorWhite.main};
+  color: ${({ theme }) => theme.palette.colorVertFluo.main};
   display: flex;
   flex-direction: column;
   justify-content: center;

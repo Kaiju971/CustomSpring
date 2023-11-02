@@ -19,7 +19,7 @@ import axios from "../axios";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
 import { useLocation, useNavigate } from "react-router";
-import Logo from "../logo/skull-logo.gif";
+import Logo from "../logo/Motorcycle-logo.gif";
 import FormConnexion from "../compenents/forms/FormConnexion";
 
 import * as S from "./topbar.styled";
@@ -32,7 +32,7 @@ const menuItemsArray = [
   "contact",
 ];
 
-const drawerWidth = "50%";
+const drawerWidth = "20%";
 
 export default function DrawerAppBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -98,18 +98,17 @@ export default function DrawerAppBar() {
     <Box
       sx={{
         textAlign: "center",
-        background:
-          "linear-gradient(180deg, #BE0000 13.54%, rgba(220, 80, 2, 0.87) 57.29%, #9B2525 100%)",
+        background: "#64cb2cf7",
         height: { sm: "200vh", md: "200vh" },
       }}
     >
       <S.CloseIconStyle>
-        <Typography variant="h5" color="black" className="close">
+        <Typography variant="h5" color="#077c36" className="close">
           Close
         </Typography>
         <CloseIcon
           onClick={handleDrawerToggle}
-          sx={{ fontSize: "4rem", cursor: "pointer" }}
+          sx={{ fontSize: "4rem", color: "#077c36", cursor: "pointer" }}
         />
       </S.CloseIconStyle>
 
@@ -131,11 +130,10 @@ export default function DrawerAppBar() {
       <Divider />
       <Typography
         onClick={() => navigate("/")}
-        variant="h2"
-        fontFamily="Wallpoet"
-        sx={{ my: 2, color: "white" }}
+        variant="h1"
+        sx={{ my: 2, color: "#092e09" }}
       >
-        AssoFacTory
+        Springfield Custom
       </Typography>
       <List
         sx={{
@@ -152,7 +150,7 @@ export default function DrawerAppBar() {
               onClick={handleDrawerToggle}
               sx={{
                 textAlign: "center",
-                color: index > 1 ? "colorWhite.main" : "colorBlack.main",
+                color: index > 1 ? "colorWhite.main" : "colorVertFoncé1.main",
               }}
             >
               <ListItemText
@@ -171,11 +169,10 @@ export default function DrawerAppBar() {
                   } else navigateItem(item);
                 }}
                 primaryTypographyProps={{
-                  fontSize: index > 1 ? "15px" : "30px",
+                  fontSize: index > 1 ? "30px" : "30px",
                   textTransform: "capitalize",
                   lineHeight: "normal",
                   fontWeight: "400",
-                  fontFamily: "Wallpoet",
                 }}
               />
             </ListItemButton>
@@ -189,7 +186,7 @@ export default function DrawerAppBar() {
       <Box
         sx={{
           "& .MuiPaper-root": {
-            backgroundColor: "transparent",
+            backgroundColor: "#1e4630",
           },
           display: "flex",
         }}
@@ -201,7 +198,7 @@ export default function DrawerAppBar() {
               display: "flex",
               justifyContent: "space-between",
               width: "100%",
-              color: "black",
+              color: "#64cb2cf7",
               background: "transparent",
             }}
           >
@@ -218,11 +215,10 @@ export default function DrawerAppBar() {
               <S.Img
                 src={Logo}
                 alt="Logo"
-                style={{ width: "54px", height: "46px", marginRight: "40px" }}
+                style={{ width: "70px", height: "66px", marginRight: "60px" }}
               />
               <Typography
-                variant="h4"
-                fontFamily='"Wallpoet", cursive'
+                variant="h1"
                 onClick={() => navigate("/")}
                 sx={{
                   my: 2,
@@ -230,26 +226,38 @@ export default function DrawerAppBar() {
                   flexGrow: 1,
                   display: { xs: "none", sm: "block" },
                   cursor: "pointer",
-                  color: "colorMaroon.main",
+                  color: "#64cb2cf7",
                 }}
               >
-                AssoFacTory
+                Springfield Custom
               </Typography>
             </S.LogoText>
-            <S.PrenomPhoto>
-              <Avatar
-                alt="user"
-                src={dataUrl}
-                sx={{
-                  width: 50,
-                  height: 50,
-                  display: userCourantPrenom ? "flex" : "none",
-                }}
-              />
-              <Typography>
-                {userCourantPrenom ? userCourantPrenom : "Unauthorised user"}
-              </Typography>
-            </S.PrenomPhoto>
+            <List sx={{ display: { xs: "none", sm: "flex" } }}>
+              {menuItemsArray.map((item) => (
+                <ListItem key={item} disablePadding>
+                  <ListItemButton
+                    selected={isSelected(item)}
+                    onClick={() => navigate(item)}
+                    sx={{
+                      color: "white",
+                      textTransform: "capitalize",
+                      "&.Mui-selected": {
+                        color: item === "inscription" ? "white" : "#daca3bff",
+                        backgroundColor:
+                          item === "inscription" ? "#daca3bff" : "transparent",
+                        borderRadius: item === "inscription" ? "10px" : "0",
+                        boxShadow:
+                          item === "inscription"
+                            ? " 0px 4px 4px #2e4f44 "
+                            : "transparent",
+                      },
+                    }}
+                  >
+                    {item}
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
 
             <ClickAwayListener
               mouseEvent="onMouseDown"
