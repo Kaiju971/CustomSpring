@@ -13,7 +13,8 @@ export const getUsers = async () => {
       "users.password",
       "roles.role"
     )
-    .innerJoin("roles", "users.id_role", "roles.id");
+    .innerJoin("roles", "users.id_role", "roles.id")
+    .orderBy("users.id", "asc");
   if (results && results.length) {
     return results;
   }
@@ -33,6 +34,7 @@ export const getUserBy = async (id = "", email = "", password = "") => {
       "roles.role"
     )
     .innerJoin("roles", "roles.id", "users.id_role");
+
   if (id && !email && !password) {
     query.where("users.id", id);
   } else if (!id && email && password) {
@@ -78,7 +80,7 @@ export const putUserById = async (id, data) => {
     }
   }
 
-  if (keys(updatedFields).length === 0) {
+  if (Object.keys(updatedFields).length === 0) {
     return null;
   }
 

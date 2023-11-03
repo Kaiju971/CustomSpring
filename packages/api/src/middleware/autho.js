@@ -8,7 +8,7 @@ export const checkAuthToken = (adminAuth = false) => {
 
     try {
       if (!auth_token) {
-        throw new Error("Unauthorized(tocken)");
+        throw new Error("Unauthorized(token)");
       }
 
       const decodedUserInfo = jwt.verify(auth_token, AUTH_TOKEN_KEY);

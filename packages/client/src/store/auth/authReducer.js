@@ -1,10 +1,10 @@
-import { Reducer } from "react";
-
 export const defaultAuthState = {
   isLoggedIn: false,
 };
 
-const authReducer = (state, action) => {
+const authReducer = (state = defaultAuthState, action) => {
+  console.log(state);
+  console.log(action.type);
   // user successfully authenticated
   if (action.type === "LOG_IN") {
     localStorage.setItem("user", JSON.stringify(action.payload));

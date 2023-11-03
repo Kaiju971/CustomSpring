@@ -11,10 +11,8 @@ import { FormControl, FormGroup } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Validate, ValidationGroup } from "mui-validate";
-import Avatar from "@mui/material/Avatar";
 import useApi from "../../hooks/api/useApi";
 import AuthContext from "../../store/auth/AuthContextProvider";
-
 import { useSnackbar } from "notistack";
 
 import * as S from "../../header/topbar.styled";
@@ -23,10 +21,10 @@ const FormConnexion = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const [dataUrl, setDataUrl] = useState("");
   const [authData, setAuthData] = useState();
   const { request, setError, error } = useApi();
-  const { globalLogInDispatch, authState } = useContext(AuthContext);
+  const { globalLogInDispatch, globalLogOutDispatch, authState } =
+    useContext(AuthContext);
   const [validationEmail, setValidationEmail] = useState({
     valid: false,
     messages: [],
@@ -39,6 +37,8 @@ const FormConnexion = () => {
         authToken: authData.user.auth_token,
         userId: authData.user.user_id,
         email: authData.user.email,
+        nom: authData.user.nom,
+        prenom: authData.user.prenom,
         id_role: authData.user.id_role,
         role: authData.user.role,
       });
@@ -47,37 +47,36 @@ const FormConnexion = () => {
 
   const authHandler = async (event) => {
     event.preventDefault();
+    if (authState.isLoggedIn) {
+      globalLogOutDispatch();
+    } else {
+      try {
+        const params = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: {
+              email: user.email,
+              password: user.password,
+            },
+          }),
+        };
 
-    try {
-      const params = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-        }),
-      };
+        const endpoint = "login";
 
-      const endpoint = "login";
-
-      await request(endpoint, params, setAuthData);
-    } catch (error) {
-      setError(error.message || error);
+        await request(endpoint, params, setAuthData);
+      } catch (error) {
+        setError(error.message || error);
+      }
     }
   };
-
-  // const [isInscrit, setIsInscrit] = useState(
-  //   userIdCourant !== "" && userIdCourant !== undefined
-  // );
-  // const [userPrenom, setUserPrenom] = useState("");
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const [userdata, setUserdata] = useState(); //information bd
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -93,85 +92,18 @@ const FormConnexion = () => {
     setUser({ ...user, [event.target?.name]: event.target?.value });
   };
 
-  // const showError = (error) => {
-  //   enqueueSnackbar("Utilisateur inconnu", {
-  //     variant: "error",
-  //   });
-  //   console.error(error);
-  // };
-
-  // const fetchGet = async () => {
-  //   const request = {
-  //     params: {
-  //       email: user.email,
-  //       password: user.password,
-  //     },
-  //   };
-  //   await axios
-  //     .get(`user`, request)
-  //     .then((response) => {
-  //       setUserdata(response.data.results[0]);
-  //     })
-  //     .catch((err) => {
-  //       showError(err);
-  //     });
-  // };
-
-  // const getUser = async () => {
-  //   if (isInscrit) {
-  //     localStorage.setItem("usrCourant", "");
-  //     localStorage.setItem("usrCourantPrenom", "");
-  //     setDataUrl("");
-  //     setIsInscrit(false);
-  //   } else {
-  //     console.log(validationEmail.valid);
-  //     if (validationEmail.valid) fetchGet();
-  //     else
-  //       enqueueSnackbar("Corrigez les erreurs dans le formulaire", {
-  //         variant: "error",
-  //       });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (userdata) {
-  //     setUserPrenom(userdata.prenom);
-  //     localStorage.setItem("usrCourant", userdata.id);
-  //     localStorage.setItem("usrCourantPrenom", userdata.prenom);
-  //     setIsInscrit(true);
-  //     setDataUrl(`data:image/jpeg;base64,${userdata.photo.slice(20)}`);
-  //   }
-  // }, [userdata]);
-
-  // const fetchGetUserById = async () => {
-  //   const request = {
-  //     params: {
-  //       id: userIdCourant,
-  //     },
-  //   };
-  //   await axios
-  //     .get(`getuserbyid`, request)
-  //     .then((response) => {
-  //       setUserdata(response.data.results[0]);
-  //     })
-  //     .catch((err) => {
-  //       showError(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   if (isInscrit && !userdata) {
-  //     fetchGetUserById();
-  //   }
-  // }, [userIdCourant]);
+  const showError = (error) => {
+    enqueueSnackbar("Utilisateur inconnu", {
+      variant: "error",
+    });
+    console.error(error);
+  };
 
   return (
     <S.CContainer>
       <Box sx={{ width: "70%" }}>
         <Grid container rowSpacing={0} columnSpacing={0}>
-          <Grid xs={12} md={6} sx={{ ml: 1 }}>
-            <Avatar alt="user" src={dataUrl} sx={{ width: 80, height: 80 }} />
-          </Grid>
+          <Grid xs={12} md={6} sx={{ ml: 1 }}></Grid>
           <Grid xs={12} md={6}>
             <S.Item>
               <ValidationGroup>
@@ -284,7 +216,7 @@ const FormConnexion = () => {
                           </Box>
                         </S.InputContainer>
                         <S.Prenom isinscrit={authState.isLoggedIn}>
-                          {authState.isLoggedIn ? userPrenom : ""}
+                          {authState.isLoggedIn ? authState.role : ""}
                         </S.Prenom>
                         <S.ButtonLogin
                           isinscrit={authState.isLoggedIn}

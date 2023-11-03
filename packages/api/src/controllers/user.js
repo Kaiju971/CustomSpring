@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 const { ENCRYPTION_KEY, AUTH_TOKEN_KEY } = process.env;
 
 export const login = (model) => async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body.data;
 
   try {
     // Check if user exist AND password supplied is correct
@@ -63,7 +63,7 @@ export const createNewUser = (model) => async (req, res) => {
   const data = req.body;
 
   try {
-    const userExist = await model.getUserBy(data.id, data.email, data.password);
+    const userExist = await model.getUserBy("", data.data.email);
 
     if (userExist) {
       return res.status(409).json({ error: "id existe déjà" });
@@ -71,18 +71,16 @@ export const createNewUser = (model) => async (req, res) => {
 
     // Encrypt user password
     const passwordHash = await bcrypt.hash(
-      data.password,
+      data.data.password,
       parseInt(ENCRYPTION_KEY)
     );
 
     // Create auth token with user info and expiry date
     const userData = {
-      id: data.id,
-      nom: data.nom,
-      prenom: data.prenom,
-      email: data.email,
-      id_role: data.id_role,
-      role: data.role,
+      nom: data.data.nom,
+      prenom: data.data.prenom,
+      email: data.data.email,
+      id_role: data.data.id_role,
       password: passwordHash,
     };
 
@@ -99,8 +97,10 @@ export const createNewUser = (model) => async (req, res) => {
       success: true,
       user: {
         user_id: userData.id,
+        id_role: userData.id_role,
         email: userData.email,
-        name: userData.nom,
+        nom: userData.nom,
+        prenom: userData.prenom,
         auth_token: authToken,
       },
     });

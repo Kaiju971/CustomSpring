@@ -1,8 +1,6 @@
-
-
 export const validateHasParameters = (...args) => {
   return (req, res, next) => {
-    const body = req.body;
+    const body = req.body.data;
 
     let valid = true;
 
@@ -21,7 +19,7 @@ export const validateHasParameters = (...args) => {
 };
 
 export const validatePasswordLength = (req, res, next) => {
-  const { password } = req.body;
+  const { password } = req.body.data;
   if (!!password && password.length > 7) {
     next();
   } else {
@@ -30,7 +28,7 @@ export const validatePasswordLength = (req, res, next) => {
 };
 
 export const validateEmailFormat = (req, res, next) => {
-  const { email } = req.body;
+  const { email } = req.body.data;
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!!email && re.test(String(email).toLowerCase())) {

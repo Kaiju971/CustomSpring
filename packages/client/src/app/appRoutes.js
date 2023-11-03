@@ -15,6 +15,7 @@ export const AppRoutes = () => {
     <>
       <Routes>
         <Route path="/" element={withSuspense(Accueil)} />
+        <Route path="/accueil" element={withSuspense(Accueil)} />
         <Route path="/produit" element={withSuspense(Produit)} />
         <Route path="/apropos" element={withSuspense(Apropos)} />
         <Route path="/inscription" element={withSuspense(Inscription)} />

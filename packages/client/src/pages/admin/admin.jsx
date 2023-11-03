@@ -43,12 +43,10 @@ const Admin = () => {
 
   const fetchGet = async () => {
     const headers = {
-      params: {
-        "x-access-token": authState.authToken,
-      },
+      "x-access-token": authState.authToken,
     };
     await axios
-      .get(`users`, headers)
+      .get(`users`, { headers })
       .then((response) => {
         setUserdata(response.data.results[0]);
       })
@@ -62,14 +60,16 @@ const Admin = () => {
   }, []);
 
   const fetchDelete = async (id) => {
-    const request = {
+    const requete = {
       params: {
         id: id,
-        api_key: AdminAPIKey,
+      },
+      headers: {
+        "x-access-token": authState.authToken,
       },
     };
     await axios
-      .delete(`delete`, request)
+      .delete(`delete`, requete)
       .then((response) => {
         console.log(response);
       })
@@ -85,14 +85,13 @@ const Admin = () => {
   const fetchPut = async (id) => {
     const params = {
       data: user,
+      id: id,
     };
     const headers = {
-      params: {
-        id: id,
-      },
+      "x-access-token": authState.authToken,
     };
     await axios
-      .put("update", params, headers)
+      .put("update", params, { headers })
       .then((response) => setUserId(response.data.results[0].id))
       .catch((err) => {
         console.error(err);
@@ -109,17 +108,16 @@ const Admin = () => {
   const handlePut = (id) => {
     if (disabledId === "") setDisabledId(id);
     else {
-      // if (editedData.lenght) {
-      setUser({
-        ...user,
-        email: editedData[id].email,
-        api_key: editedData[id].api_key,
-      });
-      fetchPut(id);
-      // } else
-      //   enqueueSnackbar("Aucun changement effectué", {
-      //     variant: "info",
-      //   });
+      if (Object.keys(editedData).length) {
+        setUser({
+          ...user,
+          email: editedData[id].email,
+        });
+        fetchPut(id);
+      } else
+        enqueueSnackbar("Aucun changement effectué", {
+          variant: "info",
+        });
       setDisabledId("");
     }
   };
@@ -141,9 +139,9 @@ const Admin = () => {
         <div>Modifier</div>
         <div>Delete</div>
       </S.GridContainer>
-      {userdata.map((item) => (
+      {userdata.map((item, index) => (
         <S.GridContainer key={item.id}>
-          <div>{item?.id}</div>
+          <div>{index + 1}</div>
           <S.TextFieldContainer>
             <TextField
               variant="standard"

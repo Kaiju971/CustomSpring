@@ -22,11 +22,11 @@ export default function MapQuest() {
   );
 }
 
-L.mapquest.key = "IPG4EFsiRL1oUzIs63ccsZZEyj1qpqQG";
+// L.mapquest.key = "IPG4EFsiRL1oUzIs63ccsZZEyj1qpqQG";
 
-// 'map' refers to a <div> element with the ID map
-L.mapquest.map("map", {
-  center: [37.7749, -122.4194],
-  layers: L.mapquest.tileLayer("map"),
-  zoom: 12,
-});
+// // 'map' refers to a <div> element with the ID map
+// L.mapquest.map("map", {
+//   center: [37.7749, -122.4194],
+//   layers: L.mapquest.tileLayer("map"),
+//   zoom: 12,
+// });

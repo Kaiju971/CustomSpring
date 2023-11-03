@@ -14,8 +14,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import axios from "../axios";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
 import { useLocation, useNavigate } from "react-router";
@@ -30,7 +28,7 @@ const menuItemsArray = [
   "produit",
   "à propos",
   "contact",
-  'admin'
+  "admin",
 ];
 
 const drawerWidth = "20%";
@@ -39,10 +37,6 @@ export default function DrawerAppBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [dataUrl, setDataUrl] = useState("");
-  const userIdCourant = localStorage.getItem("usrCourant");
-  const userCourantPrenom = localStorage.getItem("usrCourantPrenom");
-  const [userdata, setUserdata] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
   const isSelected = (item) =>
@@ -57,43 +51,12 @@ export default function DrawerAppBar() {
     else navigate(item);
   };
 
-  const fetchGet = async () => {
-    const request = {
-      params: {
-        id: userIdCourant,
-      },
-    };
-    await axios
-      .get(`getuserbyid`, request)
-      .then((response) => {
-        setUserdata(response.data.results[0]);
-        console.log("response.data.results[0] " + response.data.results[0]);
-      })
-      .catch((err) => {
-        showError(err);
-      });
-  };
-
   const showError = (error) => {
     enqueueSnackbar("Utilisateur inconnu", {
       variant: "error",
     });
     console.error(error);
   };
-
-  useEffect(() => {
-    console.log("fetchGet1");
-    if (userIdCourant && (!userdata || userdata.id !== userIdCourant)) {
-      console.log("fetchGet2");
-      fetchGet();
-    }
-  }, [userIdCourant]);
-
-  useEffect(() => {
-    if (userdata && !(userIdCourant === "" || userIdCourant === undefined)) {
-      setDataUrl(`data:image/jpeg;base64,${userdata.photo.slice(20)}`);
-    } else setDataUrl("");
-  }, [userdata, userIdCourant]);
 
   const drawer = (
     <Box
@@ -157,17 +120,7 @@ export default function DrawerAppBar() {
               <ListItemText
                 primary={item}
                 onClick={() => {
-                  console.log(item);
-                  if (item === "STRIP PLASTIC") {
-                    localStorage.setItem("salonCurant", 1);
-                    navigateItem("blog");
-                  } else if (item === "PLATEAU") {
-                    localStorage.setItem("salonCurant", 2);
-                    navigateItem("blog");
-                  } else if (item === "KINE et YOGA") {
-                    localStorage.setItem("salonCurant", 3);
-                    navigateItem("blog");
-                  } else navigateItem(item);
+                  navigateItem(item);
                 }}
                 primaryTypographyProps={{
                   fontSize: index > 1 ? "30px" : "30px",
@@ -242,6 +195,11 @@ export default function DrawerAppBar() {
                     sx={{
                       color: "white",
                       textTransform: "capitalize",
+                      display:
+                        item === "admin" &&
+                        (!authState.isLoggedIn || authState.role === "visiteur")
+                          ? "none"
+                          : "block",
                       "&.Mui-selected": {
                         color: item === "inscription" ? "white" : "#daca3bff",
                         backgroundColor:

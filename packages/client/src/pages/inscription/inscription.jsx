@@ -14,17 +14,22 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, Input } from "@mui/material";
 import { useSnackbar } from "notistack";
+
 import axios from "../../axios";
 
 import * as S from "./inscription.styled";
 
-const roles = ["administrateur", "salarié", "visiteur"];
+const roles = [
+  { id: 1, role: "administrateur" },
+  { id: 2, role: "salarié" },
+  { id: 3, role: "visiteur" },
+];
 
 export default function Inscription() {
   const [showPassword, setShowPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [newUserId, setNewUserId] = useState(0);
-
+  const [authData, setAuthData] = useState();
+  const { globalLogInDispatch } = useContext(AuthContext);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -42,13 +47,17 @@ export default function Inscription() {
   const { prenom, nom, email, password, id_role } = user;
   const { authState } = useContext(AuthContext);
   const userRole = authState.role;
+  console.log(userRole);
   const [selectedRole, setSelectedRole] = useState("visiteur");
 
   const handleChange = (event, index) => {
-    console.log("là");
     setSelectedRole(event.target.value);
-    console.log(index);
-    setUser({ ...user, id_role: roles[event.target.value] + 1 });
+
+    const roleIndex = Object.values(roles).find(
+      (item) => item.role === event.target.value
+    ).id;
+
+    setUser({ ...user, id_role: roleIndex });
   };
   const onInputChange = (event) => {
     setUser({ ...user, [event.target?.name]: event.target?.value });
@@ -58,15 +67,16 @@ export default function Inscription() {
     document.querySelector("#iconbutton").click();
   };
 
-  console.log(user);
-
   const fetchPost = async () => {
     const request = {
       data: user,
     };
+    const headers = { "x-access-token": authState.authToken };
     await axios
-      .post(`createuser`, request)
-      .then((response) => setNewUserId(response.data.results))
+      .post(`enregister`, request, { headers })
+      .then((response) => {
+        setAuthData(response.data);
+      })
       .catch((err) => {
         showError(err);
       });
@@ -87,12 +97,22 @@ export default function Inscription() {
   };
 
   useEffect(() => {
-    if (newUserId) {
+    
+    if (authData && "success" in authData) {
       enqueueSnackbar("L'utilisateur est créé avec succès", {
         variant: "success",
       });
+      globalLogInDispatch({
+        authToken: authData.user.auth_token,
+        userId: authData.user.user_id,
+        nom: authData.user.nom,
+        prenom: authData.user.prenom,
+        email: authData.user.email,
+        id_role: authData.user.id_role,
+        role: authData.user.role,
+      });
     }
-  }, [newUserId]);
+  }, [authData, globalLogInDispatch]);
 
   const showError = (err) => {
     enqueueSnackbar("Quelque chose ne va pas", { variant: "error" });
@@ -303,16 +323,16 @@ export default function Inscription() {
                           textAlign: "center",
                           fontSize: "50vh",
                         }}
-                        // disabled={userRole !== 'administrateur'}
-                        // onChange={(e) => handleChange(e)}
+                        disabled={userRole !== "administrateur"}
+                        onChange={(e) => handleChange(e)}
                       >
                         {roles?.map((item, index) => (
                           <MenuItem
                             key={index}
-                            value={item}
-                            onChange={(e) => handleChange(e, item)}
+                            value={item.role}
+                            onChange={handleChange}
                           >
-                            {item}
+                            {item.role}
                           </MenuItem>
                         ))}
                       </TextField>

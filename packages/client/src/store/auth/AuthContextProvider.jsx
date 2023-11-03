@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { useNavigate } from "react-router-dom";
 
-import authReducer, { AuthState, defaultAuthState } from "./authReducer";
+import authReducer, { defaultAuthState } from "./authReducer";
 
 // Auth context
 const authCtx = createContext({
@@ -17,7 +17,6 @@ const authCtx = createContext({
 
 export const AuthContextProvider = (props) => {
   const { children } = props;
-
   const [authState, authDispatch] = useReducer(authReducer, defaultAuthState);
   const navigate = useNavigate();
 
@@ -52,7 +51,8 @@ export const AuthContextProvider = (props) => {
 
   const globalLogOutDispatch = useCallback(() => {
     authDispatch({ type: "LOG_OUT", payload: null });
-    navigate(Routes.login);
+    // console.log(authState);
+    navigate("/accueil");
   }, [navigate]);
 
   // context values to be passed down to children
