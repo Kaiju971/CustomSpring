@@ -11,7 +11,7 @@ export const login = (model) => async (req, res) => {
 
     const id = "";
     const user = await model.getUserBy(id, email);
-
+    console.log(user);
     if (!user) {
       return res.status(404).send({ message: "id inconnu" });
     }

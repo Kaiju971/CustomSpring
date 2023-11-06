@@ -2,14 +2,19 @@ import Typography from "@mui/material/Typography";
 import videoAccueil2 from "../images/Air-Carburator-Cover-In-Chopper-We-Trust--169x300.jpg";
 import * as S from "./ImgVideo.styled";
 
-const VideoOne = () => (
+const VideoTwo = () => (
   <S.GridContainer>
-    <video src={videoAccueil2} autoPlay loop muted />
+    <iframe
+      width="1560"
+      height="715"
+      src="https://www.youtube.com/embed/Ql-LIm9j6AI?si=B8b9ijhKxmjaB8q7"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
 
-    <div className="content">
-      <Typography className="img-txt-video">AssoFacTory</Typography>
-    </div>
   </S.GridContainer>
 );
 
-export default VideoOne;
+export default VideoTwo;

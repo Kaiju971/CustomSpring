@@ -13,12 +13,13 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
 import { useLocation, useNavigate } from "react-router";
 import Logo from "../logo/Motorcycle-logo.gif";
 import FormConnexion from "../compenents/forms/FormConnexion";
+import AuthContext from "../store/auth/AuthContextProvider";
 
 import * as S from "./topbar.styled";
 
@@ -26,7 +27,7 @@ const menuItemsArray = [
   "accueil",
   "inscription",
   "produit",
-  "à propos",
+  "apropos",
   "contact",
   "admin",
 ];
@@ -38,6 +39,7 @@ export default function DrawerAppBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { enqueueSnackbar } = useSnackbar();
+  const { authState } = useContext(AuthContext);
 
   const isSelected = (item) =>
     pathname.includes(item) || (pathname === "/" && item === "accueil");
@@ -212,7 +214,7 @@ export default function DrawerAppBar() {
                       },
                     }}
                   >
-                    {item}
+                    {item === "apropos" ? "à propos" : item}
                   </ListItemButton>
                 </ListItem>
               ))}

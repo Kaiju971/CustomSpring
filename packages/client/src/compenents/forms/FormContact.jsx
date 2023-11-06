@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import * as S from "../pages/Contact.styled";
+import * as S from "../../pages/contact/contact.styled";
 
 export default function FormContact() {
   return (
@@ -70,7 +70,7 @@ export default function FormContact() {
             size="medium"
             sx={{
               m: 1,
-              backgroundColor: "#DACA3B",
+              backgroundColor: "colorVertFluo.main",
               boxShadow: " 0px 4px 4px #566573 ",
               width: "10vw",
               borderRadius: "10px",

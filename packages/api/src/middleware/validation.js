@@ -20,6 +20,7 @@ export const validateHasParameters = (...args) => {
 
 export const validatePasswordLength = (req, res, next) => {
   const { password } = req.body.data;
+
   if (!!password && password.length > 7) {
     next();
   } else {

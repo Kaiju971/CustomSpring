@@ -1,4 +1,5 @@
 import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
 
 export const MainContainer = styled("div")`
   .image {
@@ -76,11 +77,13 @@ export const MainContainer = styled("div")`
 
 export const GridContainer = styled("div")`
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   overflow: hidden;
 
   video {
+    grid-column: 1;
+    grid-row: 1;
     position: relative;
     width: 100vw;
   }
@@ -89,9 +92,10 @@ export const GridContainer = styled("div")`
     grid-column: 1;
     grid-row: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    /* position: absolute; */
     height: 100vh;
     width: 100%;
   }
@@ -119,6 +123,14 @@ export const Texts = styled("div")`
   margin-left: 20rem;
   margin-right: 20rem;
 
+  .button {
+    color: ${({ theme }) => theme.palette.colorVertFluo.main};
+    background-color: ${({ theme }) => theme.palette.colorVertFoncé1.main};
+    border: 15px;
+    height: 5vh;
+    width: 10vw;
+  }
+
   @media (max-width: 750px) {
     font-size: 1vh;
     margin-left: 2rem;
@@ -137,4 +149,9 @@ export const Title = styled("div")`
   letter-spacing: 30px;
   z-index: 100;
   mix-blend-mode: difference;
+`;
+
+export const ButOne = styled(Button)`
+  width: 4vw;
+  cursor: pointer;
 `;

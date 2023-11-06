@@ -5,14 +5,16 @@ export const MainContainer = styled("div")`
   border: 1px solid #000;
   background-color: ${({ theme }) => theme.palette.colorVert.main};
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-  margin-top: 50%;
+  /* margin-top: 50%; */
   text-align: center;
   padding-bottom: 1rem;
 `;
 
 export const FooterContent = styled("div")`
-  text-align: right;
-
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.5rem;
 `;
 
 export const FooterLogo = styled("div")`
@@ -43,7 +45,3 @@ export const FooterSocialMedia = styled("div")`
 export const FooterCopyright = styled("div")`
   /* Ajoutez vos styles pour le texte de copyright du footer ici */
 `;
-
-
-
-
