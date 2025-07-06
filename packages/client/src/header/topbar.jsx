@@ -160,7 +160,7 @@ export default function DrawerAppBar() {
           >
             <IconButton
               id="iconbutton"
-              color="inherit"
+              color="red"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}

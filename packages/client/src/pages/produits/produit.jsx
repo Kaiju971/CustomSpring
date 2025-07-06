@@ -1,8 +1,7 @@
-import {Grid} from '@mui/material';
+import { Grid } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import CardProduit from "./cardProduit";
 import axios from "../../axios";
-import moto from "../../images/1-300x171.jpg";
 
 import * as S from "./produit.styled";
 
@@ -25,7 +24,7 @@ export default function Produits({ element }) {
   }, []);
 
   return (
-    <Grid container spacing ={3}>
+    <Grid container spacing={4}>
       {produitdata.map((item, index) => (
         <Grid item xs={4}>
           <CardProduit key={index} element={item} />

@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Parallax } from "react-parallax";
-import cruiser from "../images/cruiser.jpg";
+import cruiser from "../images/Luxury low rider.jpg";
 import { useLocation, useNavigate } from "react-router";
 
 import * as S from "../compenents/ImgVideo.styled";

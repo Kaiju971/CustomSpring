@@ -55,13 +55,6 @@ router.put("/update", checkAuthToken(true), updateUserById(userModel));
 router.delete("/delete", checkAuthToken(true), removeUser(userModel));
 router.get("/roles", getAllRoles(userModel));
 
-// router.get("/horaires", getHoraires(horairesModel));
-// router.put(
-//   "/updhoraires",
-//   checkAuthToken(true),
-//   updateHorairesById(horairesModel)
-// );
-
 router.get("/types", getAllTypes(produitModel));
 router.get("/modeles", getAllModeles(produitModel));
 router.get("/marques", getAllMarques(produitModel));

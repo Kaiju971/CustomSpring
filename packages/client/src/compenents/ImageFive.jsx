@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Parallax } from "react-parallax";
-import Atelier from "../images/AtelierParallax.jpg";
+import Atelier from "../images/atelier.png";
 import { useLocation, useNavigate } from "react-router";
 
 import * as S from "../compenents/ImgVideo.styled";

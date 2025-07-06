@@ -5,6 +5,9 @@ export const MainContainer = styled("div")`
   .image {
     position: relative;
     height: 100vh;
+    width: 100%;
+    padding: 2rem;
+    align-content:center;
   }
 
   .content {
@@ -17,10 +20,10 @@ export const MainContainer = styled("div")`
   }
 
   .content span.img-txt-strip {
-    background-color: #ff0000;
+    background-color: #00ff80;
     text-transform: uppercase;
-    color: black;
-    padding: 1rem;
+    color: #f5a300;
+    margin-top: 10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
@@ -33,30 +36,30 @@ export const MainContainer = styled("div")`
       white-space: nowrap;
     }
   }
-  .content .img-txt-plateau {
-    /* background-color: #b4f573;
+  /* .content .img-txt-plateau {
+    background-color: #b4f573;
     text-transform: uppercase;
     color: #de9a5a;
-    padding: 1rem;
+    padding-top: 10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
-    mix-blend-mode: difference; */
-    /* @media (max-width: 750px) {
+    mix-blend-mode: difference;
+    @media (max-width: 750px) {
       font-size: 1vh;
       letter-spacing: 20px;
       margin-bottom: 20rem;
       white-space: nowrap;
       margin-left: 50rem;
       margin-right: 50rem;
-    } */
-  }
+    }
+  } */
 
   .content span.img-txt-yoga {
-    background-color: #66a3fd;
+    background-color: #6e00ec;
     text-transform: uppercase;
     color: #de9a5a;
-    padding: 1rem;
+    padding-top: 10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
@@ -64,10 +67,10 @@ export const MainContainer = styled("div")`
   }
 
   .content span.img-txt-detente {
-    background-color: #66a3fd;
+    background-color: #259400;
     text-transform: uppercase;
-    color: #de9a5a;
-    padding: 1rem;
+    color: #382a1e;
+    padding-top: 10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
@@ -95,20 +98,22 @@ export const GridContainer = styled("div")`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* position: absolute; */
+    /* position: relative; */
     height: 100vh;
     width: 100%;
   }
 
   .content .img-txt-video {
-    background-color: goldenrod;
+    background-color: #3a7300;
     text-transform: uppercase;
-    color: red;
-    padding: 1rem;
+    color: #ffe600;
+    padding: 2rem;
+    margin-top: 5rem;
     font-size: 5vh;
-    letter-spacing: 50px;
+    /* letter-spacing: 50px; */
     z-index: 100;
     mix-blend-mode: color-dodge;
+
     @media (max-width: 750px) {
       /* width: 30vw;
       height: 30%; */

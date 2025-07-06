@@ -1,7 +1,7 @@
 import Typography from "@mui/material/Typography";
 import { Parallax } from "react-parallax";
 import { useLocation, useNavigate } from "react-router";
-import GGBlack from "../images/Harley-DavidsonGGBlack.jpg";
+import GGBlack from "../images/Personnalisation.jpg";
 
 import * as S from "../compenents/ImgVideo.styled";
 

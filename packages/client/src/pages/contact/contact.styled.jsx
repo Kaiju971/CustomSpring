@@ -1,12 +1,6 @@
 import { styled } from "@mui/material/styles";
 
 export const Container = styled("div")`
-  /* margin-bottom: 15rem; */
-  /* .image {
-    position: relative;
-    height: 100vh;
-  }
-
   .content {
     display: flex;
     align-items: center;
@@ -14,7 +8,7 @@ export const Container = styled("div")`
     position: absolute;
     height: 100vh;
     width: 10%;
-  } */
+  }
 `;
 
 export const FormContainer = styled("div")`

@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Parallax } from "react-parallax";
-import BadGoldAss from "../images/Bad-Gold-Ass.jpg";
+import BadGoldAss from "../images/Arrivages.jpg";
 import { useLocation, useNavigate } from "react-router";
 
 import * as S from "../compenents/ImgVideo.styled";
