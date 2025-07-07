@@ -12,10 +12,10 @@ const ImageTwo = () => {
       <div className="content">
         <S.Texts>
           <span className="img-txt-strip">Personnalisation</span>
+          {/* <br />
           <br />
           <br />
-          <br />
-          <br />
+          <br /> */}
           <Typography
             variant="h4"
             sx={{ color: "#ff0000", mixBlendMode: "color-burn" }}

@@ -6,7 +6,7 @@ const VideoTwo = () => (
   <S.GridContainer>
     <iframe
       width="1560"
-      height="715"
+      height="650"
       src="https://www.youtube.com/embed/Ql-LIm9j6AI?si=B8b9ijhKxmjaB8q7"
       title="YouTube video player"
       frameborder="0"

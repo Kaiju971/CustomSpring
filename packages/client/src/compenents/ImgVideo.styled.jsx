@@ -4,17 +4,17 @@ import { Button } from "@mui/material";
 export const MainContainer = styled("div")`
   .image {
     position: relative;
-    height: 100vh;
+    height: 60vh;
     width: 100%;
     padding: 2rem;
-    align-content:center;
+    align-content: center;
   }
 
   .content {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: relative;
     height: 100vh;
     width: 100%;
   }
@@ -59,7 +59,7 @@ export const MainContainer = styled("div")`
     background-color: #6e00ec;
     text-transform: uppercase;
     color: #de9a5a;
-    padding-top: 10rem;
+    padding-top: -10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
@@ -70,7 +70,7 @@ export const MainContainer = styled("div")`
     background-color: #259400;
     text-transform: uppercase;
     color: #382a1e;
-    padding-top: 10rem;
+    padding-top: -10rem;
     font-size: 1.5rem;
     letter-spacing: 30px;
     z-index: 100;
@@ -89,6 +89,7 @@ export const GridContainer = styled("div")`
     grid-row: 1;
     position: relative;
     width: 100vw;
+    /* height:100vh; */
   }
 
   .content {
@@ -107,7 +108,7 @@ export const GridContainer = styled("div")`
     background-color: #3a7300;
     text-transform: uppercase;
     color: #ffe600;
-    padding: 2rem;
+    /* padding: 2rem; */
     margin-top: 5rem;
     font-size: 5vh;
     /* letter-spacing: 50px; */
@@ -127,6 +128,7 @@ export const Texts = styled("div")`
   text-align: center;
   margin-left: 20rem;
   margin-right: 20rem;
+  padding-bottom: 19rem;
 
   .button {
     color: ${({ theme }) => theme.palette.colorVertFluo.main};

@@ -11,7 +11,6 @@ const ImageFive = () => {
   return (
     <Parallax
       variant="h2"
-      sx={{ pt: 8 }}
       className="image"
       bgImage={Atelier}
       strength={800}
@@ -19,10 +18,7 @@ const ImageFive = () => {
       <div className="content">
         <S.Texts>
           <span className="img-txt-detente">L'atelier</span>
-          <br />
-          <br />
-          <br />
-          <br />
+
           <Typography
             variant="h4"
             sx={{ color: "#66a3fd", mixBlendMode: "difference" }}
